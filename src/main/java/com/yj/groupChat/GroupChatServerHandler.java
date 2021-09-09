@@ -16,10 +16,6 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
     private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd HH:MM:SS");
 
-    @Override
-    protected void messageReceived(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
-
-    }
 
     //连接建立，一旦建立第一个被执行
     //将当前channel加入channelGroup
@@ -36,8 +32,9 @@ public class GroupChatServerHandler extends SimpleChannelInboundHandler<String> 
         ctx.close();
     }
 
+
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         Channel channel = ctx.channel();
         channelGroup.forEach(ch->{
             if (channel != ch){
